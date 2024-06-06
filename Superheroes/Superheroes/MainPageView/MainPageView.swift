@@ -32,8 +32,6 @@ struct MainPageView: View {
             VStack {
                 HStack(alignment: .top) {
                     VStack {
-                        Spacer()
-                            .frame(height: 44)
                         Text(category.capitalized)
                             .font(.system(size: 34, weight: .bold))
                             .padding(.leading, 12)
@@ -42,22 +40,26 @@ struct MainPageView: View {
                     FavoriteToggle(showFavorite: $showFavorite)
                         .padding(.trailing, 12)
                 }
-                ScrollView {
                     if favoriteHeroes.isEmpty{
+                        Spacer()
                         Text("No Favorites")
                             .foregroundColor(.gray)
-                    }
-                        ForEach(favoriteHeroes){ hero in
-                            NavigationLink {
-                                HeroPage(hero: hero)
-                            } label: {
-                                CardMainPage(hero: hero)
+                        Spacer()
+                    } else {
+                        ScrollView {
+                            ForEach(favoriteHeroes){ hero in
+                                NavigationLink {
+                                    HeroPage(hero: hero)
+                                } label: {
+                                    CardMainPage(hero: hero)
+                                }
                             }
                         }
+                        .padding(.leading, 16)
+                        .padding(.trailing, 16)
+                        .scrollIndicators(.hidden)
                 }
-                .padding(.leading, 16)
-                .padding(.trailing, 16)
-                .scrollIndicators(.hidden)
+                
             }
         }
         .edgesIgnoringSafeArea(.all)
