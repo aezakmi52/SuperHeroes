@@ -188,6 +188,5 @@ struct MainPageView_Previews: PreviewProvider {
         MainPageView(category: HeroModel.Category.superheroes.rawValue)
            .preferredColorScheme(.dark)
            .environmentObject(ModelData())
-        
     }
 }
