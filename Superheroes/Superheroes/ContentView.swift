@@ -8,52 +8,47 @@
 import SwiftUI
 import UIKit
 
-//MARK: - ContentView
+// MARK: - ContentView
 
 struct ContentView: View {
 
-    //MARK: - Properties
-
-    var superheroes = "superheroes"
-    var supervillains = "supervillains"
-
-    //MARK: - Initializers
+    // MARK: - Properties
+    
+    let categories = HeroModel.Category.allCases.map {$0.rawValue}
+    
+    // MARK: - Initializers
 
     init() {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundEffect = nil
         appearance.backgroundColor = .clear
+        appearance.shadowColor = .clear
         
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().compactAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
     }
 
-    //MARK: - View
+    // MARK: - View
 
     var body: some View {
         TabView {
-            MainPageView(category: superheroes)
-                .preferredColorScheme(.dark)
-                .tabItem {
-                    Image(superheroes)
-                        .renderingMode(.template)
-                    Text(superheroes.capitalized)
-                }
-            MainPageView(category: supervillains)
-                .preferredColorScheme(.dark)
-                .tabItem {
-                    Image(supervillains)
-                        .renderingMode(.template)
-                    Text(supervillains.capitalized)
-                }
+            ForEach(categories, id: \.self) { category in
+                MainPageView(category: category)
+                    .tabItem{
+                        Image(category)
+                            .renderingMode(.template)
+                        Text(category)
+                    }
+                    .preferredColorScheme(.dark)
+            }
         }
         .accentColor(.white)
     }
 }
 
-//MARK: -Preview
+// MARK: -Preview
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

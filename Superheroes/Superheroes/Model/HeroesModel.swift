@@ -8,7 +8,11 @@
 import Foundation
 import SwiftUI
 
-struct Hero: Codable, Hashable, Identifiable {
+// MARK: - Hero
+
+struct HeroModel: Codable, Hashable, Identifiable {
+    
+    // MARK: - Properties
     
     var id: Int
     

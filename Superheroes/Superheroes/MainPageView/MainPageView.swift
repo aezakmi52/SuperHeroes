@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-//MARK: - MainPageView
+// MARK: - MainPageView
 
 struct MainPageView: View {
     
-    //MARK: - Properties
+    // MARK: - Properties
     
     @EnvironmentObject var modelData: ModelData
     
@@ -19,13 +19,13 @@ struct MainPageView: View {
   
     var category: String
 
-    var favoriteHeroes: [Hero] {
+    var displayedHeroes: [HeroModel] {
         modelData.heroes.filter { hero in
             ((!showFavorite || hero.isFavorite) && hero.category.rawValue == category)
         }
     }
     
-    //MARK: - View
+    // MARK: - View
     
     var body: some View {
         NavigationView {
@@ -40,24 +40,24 @@ struct MainPageView: View {
                     FavoriteToggle(showFavorite: $showFavorite)
                         .padding(.trailing, 12)
                 }
-                    if favoriteHeroes.isEmpty{
-                        Spacer()
-                        Text("No Favorites")
-                            .foregroundColor(.gray)
-                        Spacer()
-                    } else {
-                        ScrollView {
-                            ForEach(favoriteHeroes){ hero in
-                                NavigationLink {
-                                    HeroPage(hero: hero)
-                                } label: {
-                                    CardMainPage(hero: hero)
-                                }
+                if displayedHeroes.isEmpty {
+                    Spacer()
+                    Text("No Favorites")
+                        .foregroundColor(.gray)
+                    Spacer()
+                } else {
+                    ScrollView {
+                        ForEach(displayedHeroes) { hero in
+                            NavigationLink {
+                                HeroPageView(hero: hero)
+                            } label: {
+                                CardMainPage(hero: hero)
                             }
                         }
-                        .padding(.leading, 16)
-                        .padding(.trailing, 16)
-                        .scrollIndicators(.hidden)
+                    }
+                    .padding(.leading, 16)
+                    .padding(.trailing, 16)
+                    .scrollIndicators(.hidden)
                 }
                 
             }
@@ -66,108 +66,110 @@ struct MainPageView: View {
     }
 }
 
-//MARK: - Private
+// MARK: - Private
 
-//MARK: - FavoriteToggle
+// MARK: - FavoriteToggle
 
 private struct FavoriteToggle: View {
     
-    //MARK: - Properties
+    // MARK: - Properties
     
     @Binding var showFavorite: Bool
     
-    //MARK: - View
+    // MARK: - View
     
     var body: some View {
         Button {
             showFavorite.toggle()
-            } label: {
-                Image(showFavorite ? "star.fill" : "star")
-                    .labelStyle(.iconOnly)
+        } label: {
+            Image(showFavorite ? "star.fill" : "star")
+                .labelStyle(.iconOnly)
         }
     }
 }
 
-//MARK: - CardMainPage
+// MARK: - CardMainPage
 
 private struct CardMainPage: View {
     
-    //MARK: - Properties
+    // MARK: - Properties
     
     @EnvironmentObject var modelData: ModelData
     
     var heroIndex: Int {
-            modelData.heroes.firstIndex(where: { $0.id == hero.id })!
-        }
-    var hero: Hero
+        modelData.heroes.firstIndex(where: { $0.id == hero.id })!
+    }
+    var hero: HeroModel
     
-    //MARK: - View
+    // MARK: - View
     
     var body: some View {
-            HStack {
-                VStack(alignment: .leading) {
-                    HStack {
-                        StarFavoriteButton(isSet: $modelData.heroes[heroIndex].isFavorite)
-                        Text(hero.name.capitalized)
-                            .font(.system(size: 22, weight: .bold))
-                            .lineLimit(1)
-                            .fixedSize()
-                    }
-                    .padding(.bottom, 12)
-                    HStack {
-                        Text("\(hero.stats.intelligents)")
-                        Text("INT")
-                            .opacity(0.38)
-                    }
-                    HStack {
-                        Text("\(hero.stats.power)")
-                        Text("POW")
-                            .opacity(0.38)
-                    }
-                    HStack {
-                        Text("\(hero.stats.speed)")
-                        Text("SPD")
-                            .opacity(0.38)
-                    }
-                    HStack {
-                        Text("\(hero.stats.endurance)")
-                        Text("END")
-                            .opacity(0.38)
-                    }
-                    HStack {
-                        Text("\(hero.stats.reaction)")
-                        Text("REA")
-                            .opacity(0.38)
-                    }
-                    HStack {
-                        Text("\(hero.stats.protection)")
-                        Text("PRO")
-                            .opacity(0.38)
-                    }
+        HStack {
+            VStack(alignment: .leading) {
+                HStack {
+                    StarFavoriteButton(isSet: $modelData.heroes[heroIndex].isFavorite)
+                    Text(hero.name.capitalized)
+                        .font(.system(size: 22, weight: .bold))
+                        .lineLimit(1)
+                        .fixedSize()
                 }
-                .font(.system(size: 17))
-                .foregroundColor(.white)
-                .bold()
-                Spacer()
-                Image("\(hero.name)")
-                    .resizable()
-                    .frame(width: 164, height: 164)
+                .padding(.bottom, 12)
+                HStack {
+                    Text("\(hero.stats.intelligents)")
+                    Text("INT")
+                        .opacity(0.38)
+                }
+                HStack {
+                    Text("\(hero.stats.power)")
+                    Text("POW")
+                        .opacity(0.38)
+                }
+                HStack {
+                    Text("\(hero.stats.speed)")
+                    Text("SPD")
+                        .opacity(0.38)
+                }
+                HStack {
+                    Text("\(hero.stats.endurance)")
+                    Text("END")
+                        .opacity(0.38)
+                }
+                HStack {
+                    Text("\(hero.stats.reaction)")
+                    Text("REA")
+                        .opacity(0.38)
+                }
+                HStack {
+                    Text("\(hero.stats.protection)")
+                    Text("PRO")
+                        .opacity(0.38)
+                }
             }
-            .padding(16)
-            .background(Color("\(hero.name)Color"))
-            .cornerRadius(24)
+            .font(.system(size: 17))
+            .foregroundColor(.white)
+            .bold()
+            Spacer()
+            Image("\(hero.name)")
+                .resizable()
+                .frame(width: 164, height: 164)
+        }
+        .padding(16)
+        .background(Color("\(hero.name)Color"))
+        .cornerRadius(24)
     }
 }
 
-//MARK: - SrarFavoriteButton
+// MARK: - Private
+
+// MARK: - SrarFavoriteButton
 
 private struct StarFavoriteButton: View {
     
-    //MARK: - Properties
+    // MARK: - Properties
     
     @Binding var isSet: Bool
     
-    //MARK: - View
+    // MARK: - View
     
     var body: some View {
         Button {
@@ -179,14 +181,12 @@ private struct StarFavoriteButton: View {
     }
 }
 
-
-//MARK: - Preview
+// MARK: - Preview
 
 struct MainPageView_Previews: PreviewProvider {
     static var previews: some View {
-        MainPageView(category: "superheroes")
+        MainPageView(category: HeroModel.Category.superheroes.rawValue)
            .preferredColorScheme(.dark)
            .environmentObject(ModelData())
-        
     }
 }

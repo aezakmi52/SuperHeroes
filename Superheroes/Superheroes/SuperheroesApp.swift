@@ -7,16 +7,16 @@
 
 import SwiftUI
 
-//MARK: - Superheroes App
+// MARK: - SuperheroesApp
 
 @main
 struct SuperheroesApp: App {
     
-    //MARK: - Properties
+    // MARK: - Properties
     
     @State private var modelData = ModelData()
     
-    //MARK: - View
+    // MARK: - View
     
     var body: some Scene {
         WindowGroup {
