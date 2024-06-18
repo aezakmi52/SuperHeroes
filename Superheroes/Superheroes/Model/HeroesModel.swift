@@ -20,7 +20,7 @@ struct HeroModel: Codable, Hashable, Identifiable {
     var stats: Stats
     var isFavorite: Bool
     
-    var category: Category
+    var category: HeroCategory
     
     struct Stats: Codable, Hashable {
         
@@ -30,11 +30,5 @@ struct HeroModel: Codable, Hashable, Identifiable {
         var endurance: Int
         var reaction: Int
         var protection: Int
-    }
-    
-    enum Category: String, Codable, CaseIterable {
-        
-        case superheroes = "superheroes"
-        case supervillains = "supervillains"
     }
 }
