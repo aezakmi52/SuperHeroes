@@ -14,7 +14,7 @@ struct ContentView: View {
 
     // MARK: - Properties
     
-    let categories = HeroModel.Category.allCases.map {$0.rawValue}
+    let categories = HeroCategory.allCases.map {$0.rawValue}
     
     // MARK: - Initializers
 

@@ -97,8 +97,9 @@ private struct CardMainPage: View {
     @EnvironmentObject var modelData: ModelData
     
     var heroIndex: Int {
-        modelData.heroes.firstIndex(where: { $0.id == hero.id })!
+        (modelData.heroes.firstIndex(where: { $0.id == hero.id }) ?? hero.id)
     }
+    
     var hero: HeroModel
     
     // MARK: - View
@@ -185,7 +186,7 @@ private struct StarFavoriteButton: View {
 
 struct MainPageView_Previews: PreviewProvider {
     static var previews: some View {
-        MainPageView(category: HeroModel.Category.superheroes.rawValue)
+        MainPageView(category: HeroCategory.superheroes.rawValue)
            .preferredColorScheme(.dark)
            .environmentObject(ModelData())
     }
