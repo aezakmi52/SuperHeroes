@@ -13,5 +13,9 @@ class ModelData: ObservableObject {
     
     // MARK: - Properties
     
-    @Published var heroes: [HeroModel] = DataDownloadService().load("Hero.json")
+    @Published var heroes: [HeroModel] = []
+    
+    init(heroes: [HeroModel] = []) {
+        self.heroes = heroes
+    }
 }

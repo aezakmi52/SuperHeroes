@@ -18,10 +18,6 @@ struct HeroPageView: View {
     
     @State private var isFavorite = false
     
-    var heroIndex: Int {
-        ($modelData.heroes.firstIndex(where: { $0.id == hero.id }) ?? hero.id)
-    }
-    
     var hero: HeroModel
     
     // MARK: - Initiallizers
@@ -79,9 +75,7 @@ struct HeroPageView: View {
                         .navigationBarBackButtonHidden()
                         .navigationBarItems(leading: backButton)
                         .onDisappear {
-                            if let index = $modelData.heroes.firstIndex(where: {$0.id == hero.id}) {
-                                modelData.heroes[index].isFavorite = isFavorite
-                            }
+                            modelData.heroes[hero.id - 1].isFavorite = isFavorite
                         }
                 }
                 .bold()

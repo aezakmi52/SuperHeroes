@@ -14,14 +14,22 @@ struct SuperheroesApp: App {
     
     // MARK: - Properties
     
-    @State private var modelData = ModelData()
+    @StateObject private var modelData = ModelData()
+    
+    // MARK: - Initializers
+        
+    init() {
+        let downloadService = DataDownloadService()
+        let heroes: [HeroModel] = downloadService.load("Hero.json")
+        _modelData = StateObject(wrappedValue: ModelData(heroes: heroes))
+    }
     
     // MARK: - View
     
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(ModelData())
+                .environmentObject(modelData)
         }
     }
 }

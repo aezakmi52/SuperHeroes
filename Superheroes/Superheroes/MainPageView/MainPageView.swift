@@ -96,10 +96,6 @@ private struct CardMainPage: View {
     
     @EnvironmentObject var modelData: ModelData
     
-    var heroIndex: Int {
-        (modelData.heroes.firstIndex(where: { $0.id == hero.id }) ?? hero.id)
-    }
-    
     var hero: HeroModel
     
     // MARK: - View
@@ -108,7 +104,7 @@ private struct CardMainPage: View {
         HStack {
             VStack(alignment: .leading) {
                 HStack {
-                    StarFavoriteButton(isSet: $modelData.heroes[heroIndex].isFavorite)
+                    StarFavoriteButton(isSet: $modelData.heroes[hero.id - 1].isFavorite)
                     Text(hero.name.capitalized)
                         .font(.system(size: 22, weight: .bold))
                         .lineLimit(1)
