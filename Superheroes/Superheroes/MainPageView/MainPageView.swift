@@ -104,7 +104,9 @@ private struct CardMainPage: View {
         HStack {
             VStack(alignment: .leading) {
                 HStack {
-                    StarFavoriteButton(isSet: $modelData.heroes[hero.id - 1].isFavorite)
+                    if modelData.heroes.map({ $0.id }).contains(hero.id) {
+                        StarFavoriteButton(isSet: $modelData.heroes.first(where: {$0.id == hero.id})!.isFavorite)
+                    }
                     Text(hero.name.capitalized)
                         .font(.system(size: 22, weight: .bold))
                         .lineLimit(1)

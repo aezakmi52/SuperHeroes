@@ -75,7 +75,9 @@ struct HeroPageView: View {
                         .navigationBarBackButtonHidden()
                         .navigationBarItems(leading: backButton)
                         .onDisappear {
-                            modelData.heroes[hero.id - 1].isFavorite = isFavorite
+                            if let index = modelData.heroes.firstIndex(where: { $0.id == hero.id }) {
+                                modelData.heroes[index].isFavorite = isFavorite
+                            }
                         }
                 }
                 .bold()
