@@ -13,14 +13,14 @@ struct MainPageView: View {
     
     // MARK: - Properties
     
-    @EnvironmentObject var modelData: ModelData
+    @EnvironmentObject var dataService: DataService
     
     @State private var showFavorite = false
   
     var category: String
 
     var displayedHeroes: [HeroModel] {
-        modelData.heroes.filter { hero in
+        dataService.heroes.filter { hero in
             ((!showFavorite || hero.isFavorite) && hero.category.rawValue == category)
         }
     }
@@ -94,7 +94,7 @@ private struct CardMainPage: View {
     
     // MARK: - Properties
     
-    @EnvironmentObject var modelData: ModelData
+    @EnvironmentObject var dataService: DataService
     
     var hero: HeroModel
     
@@ -104,9 +104,7 @@ private struct CardMainPage: View {
         HStack {
             VStack(alignment: .leading) {
                 HStack {
-                    if modelData.heroes.map({ $0.id }).contains(hero.id) {
-                        StarFavoriteButton(isSet: $modelData.heroes.first(where: {$0.id == hero.id})!.isFavorite)
-                    }
+                    starFavoriteButton
                     Text(hero.name.capitalized)
                         .font(.system(size: 22, weight: .bold))
                         .lineLimit(1)
@@ -156,25 +154,16 @@ private struct CardMainPage: View {
         .background(Color("\(hero.name)Color"))
         .cornerRadius(24)
     }
-}
-
-// MARK: - Private
-
-// MARK: - SrarFavoriteButton
-
-private struct StarFavoriteButton: View {
     
-    // MARK: - Properties
+    // MARK: - SrarFavoriteButton
     
-    @Binding var isSet: Bool
-    
-    // MARK: - View
-    
-    var body: some View {
+    private var starFavoriteButton: some View {
+        
+        // MARK: - View
         Button {
-            isSet.toggle()
+            dataService.changeFavorite(id: hero.id, isFavorite: !hero.isFavorite)
         } label: {
-            Label("Favorite hero", image: isSet ? "star.fill" : "star")
+            Label("Favorite hero", image: hero.isFavorite ? "star.fill" : "star")
                 .labelStyle(.iconOnly)
         }
     }
@@ -186,6 +175,6 @@ struct MainPageView_Previews: PreviewProvider {
     static var previews: some View {
         MainPageView(category: HeroCategory.superheroes.rawValue)
            .preferredColorScheme(.dark)
-           .environmentObject(ModelData())
+           .environmentObject(DataService())
     }
 }

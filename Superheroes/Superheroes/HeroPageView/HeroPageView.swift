@@ -13,7 +13,7 @@ struct HeroPageView: View {
     
     // MARK: - Properties
     
-    @EnvironmentObject var modelData: ModelData
+    @EnvironmentObject var dataService: DataService
     @Environment(\.dismiss) private var dismiss
     
     @State private var isFavorite = false
@@ -71,13 +71,11 @@ struct HeroPageView: View {
                         }
                     }
                     Spacer()
-                    FavoriteButton(isSet: $isFavorite)
+                    favoriteButton
                         .navigationBarBackButtonHidden()
                         .navigationBarItems(leading: backButton)
                         .onDisappear {
-                            if let index = modelData.heroes.firstIndex(where: { $0.id == hero.id }) {
-                                modelData.heroes[index].isFavorite = isFavorite
-                            }
+                            dataService.changeFavorite(id: hero.id, isFavorite: !hero.isFavorite)
                         }
                 }
                 .bold()
@@ -94,7 +92,7 @@ struct HeroPageView: View {
         }
     }
 
-// MARK: - Private
+    // MARK: - Private
     
     // MARK: - BackButton
     
@@ -107,27 +105,21 @@ struct HeroPageView: View {
             Image(systemName: "chevron.left")
         }
     }
-}
 
-// MARK: - FavoriteButton
+    // MARK: - FavoriteButton
 
-private struct FavoriteButton: View {
-    
-    // MARK: - Properties
-    
-    @Binding var isSet: Bool
+    private var favoriteButton: some View {
     
     // MARK: - View
-    
-    var body: some View {
+        
         Button {
-            isSet.toggle()
+            isFavorite.toggle()
         } label: {
             HStack {
                 Spacer()
-                Text(isSet ? "InFavorites" : "Add to favorites")
+                Text(isFavorite ? "InFavorites" : "Add to favorites")
                     .font(.system(size: 17, weight: .semibold))
-                    .foregroundColor(isSet ? .black : Color("activeButton"))
+                    .foregroundColor(isFavorite ? .black : Color("activeButton"))
                     .padding(.vertical, 18)
                 Spacer()
             }
@@ -136,7 +128,7 @@ private struct FavoriteButton: View {
                     RoundedRectangle(cornerRadius: 16)
                         .stroke(Color("activeButton"), lineWidth: 2)
                     RoundedRectangle(cornerRadius: 16)
-                        .fill(isSet ? Color("activeButton") : .black)
+                        .fill(isFavorite ? Color("activeButton") : .black)
                 }
             }
         }
@@ -148,8 +140,8 @@ private struct FavoriteButton: View {
 
 struct HeroPageView_Previews: PreviewProvider {
     static var previews: some View {
-        HeroPageView(hero: ModelData().heroes[0])
+        HeroPageView(hero: DataService().heroes[0])
             .preferredColorScheme(.dark)
-            .environmentObject(ModelData())
+            .environmentObject(DataService())
     }
 }

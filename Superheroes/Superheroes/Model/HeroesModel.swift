@@ -21,7 +21,7 @@ struct HeroModel: Codable, Hashable, Identifiable {
     var isFavorite: Bool
     
     var category: HeroCategory
-    
+    // MARK: - Stats
     struct Stats: Codable, Hashable {
         
         var intelligents: Int
