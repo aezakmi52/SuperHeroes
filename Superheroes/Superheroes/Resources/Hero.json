@@ -11,7 +11,14 @@
            "reaction": 76,
            "protection": 34
        },
-       "isFavorite": false
+       "isFavorite": false,
+       "imageURL": "https://i.postimg.cc/SKkfnjRb/spiderman.png",
+       "color": {
+           "red": 88,
+           "green": 5,
+           "blue": 14,
+           "alpha": 1
+       }
     },
     
     {
@@ -26,7 +33,14 @@
            "reaction": 80,
            "protection": 25
        },
-       "isFavorite": false
+       "isFavorite": false,
+       "imageURL": "https://i.postimg.cc/Zqh0ZDHw/yoda.png",
+       "color": {
+           "red": 66,
+           "green": 93,
+           "blue": 23,
+           "alpha": 1
+       }
     },
     
     {
@@ -41,7 +55,14 @@
            "reaction": 58,
            "protection": 40
        },
-       "isFavorite": false
+       "isFavorite": false,
+       "imageURL": "https://i.postimg.cc/RFxMw3yG/thing.png",
+       "color": {
+           "red": 90,
+           "green": 50,
+           "blue": 7,
+           "alpha": 1
+       }
     },
     
     {
@@ -56,7 +77,14 @@
            "reaction": 62,
            "protection": 49
        },
-       "isFavorite": false
+       "isFavorite": false,
+       "imageURL": "https://i.postimg.cc/hj25c6Lx/venom.png",
+       "color": {
+           "red": 28,
+           "green": 28,
+           "blue": 28,
+           "alpha": 1
+       }
     },
     
     {
@@ -71,7 +99,14 @@
            "reaction": 67,
            "protection": 57
        },
-       "isFavorite": false
+       "isFavorite": false,
+       "imageURL": "https://i.postimg.cc/D0bH65GX/alien.png",
+       "color": {
+           "red": 21,
+           "green": 89,
+           "blue": 21,
+           "alpha": 1
+       }
     },
     
     {
@@ -86,7 +121,14 @@
            "reaction": 54,
            "protection": 60
        },
-       "isFavorite": false
+       "isFavorite": false,
+       "imageURL": "https://i.postimg.cc/HxMF4BX7/krang.png",
+       "color": {
+           "red": 97,
+           "green": 12,
+           "blue": 37,
+           "alpha": 1
+       }
     },
     
     {
@@ -102,6 +144,12 @@
            "protection": 71
        },
        "isFavorite": false,
-       "color": "0x242357"
+       "imageURL": "https://i.postimg.cc/TPJDLXHy/joker.png",
+       "color": {
+           "red": 36,
+           "green": 35,
+           "blue": 87,
+           "alpha": 1
+       }
     }
 ]

@@ -35,8 +35,22 @@ struct HeroPageView: View {
                 VStack {
                     Text(hero.name.capitalized)
                         .font(.system(size: 34, weight: .bold))
-                    Image(hero.name)
-                        .padding(.top, 20)
+                    AsyncImage(url: URL(string: hero.imageURL)) { phase in
+                        switch phase {
+                        case .empty:
+                            ProgressView()
+                        case .success(let image):
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(height: 164)
+                        case .failure:
+                            Image(systemName: "xmark.circle")
+                        @unknown default:
+                            EmptyView()
+                        }
+                    }
+                    .padding(.top, 10)
                     VStack(alignment: .leading, spacing: 20) {
                         HStack {
                             Text("\(hero.stats.intelligents)")
@@ -51,7 +65,7 @@ struct HeroPageView: View {
                         }
                         HStack {
                             Text("\(hero.stats.speed)")
-                            Text("SPDEED")
+                            Text("SPEED")
                                 .opacity(0.38)
                         }
                         HStack {
@@ -75,15 +89,17 @@ struct HeroPageView: View {
                         .navigationBarBackButtonHidden()
                         .navigationBarItems(leading: backButton)
                         .onDisappear {
-                            dataService.changeFavorite(id: hero.id, isFavorite: !hero.isFavorite)
-                        }
+                            if isFavorite != hero.isFavorite {
+                                dataService.changeFavorite(id: hero.id, isFavorite: !hero.isFavorite)
+                                }
+                            }
                 }
                 .bold()
                 .frame(height: geometry.size.height)
             }
             .background {
                 LinearGradient(
-                    gradient: Gradient(colors: [Color("\(hero.name)Color"), .black]),
+                    gradient: Gradient(colors: [hero.color.outputColor, .black]),
                     startPoint: .top,
                     endPoint: .bottom
                 )

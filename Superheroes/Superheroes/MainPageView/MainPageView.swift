@@ -146,12 +146,23 @@ private struct CardMainPage: View {
             .foregroundColor(.white)
             .bold()
             Spacer()
-            Image("\(hero.name)")
-                .resizable()
-                .frame(width: 164, height: 164)
+            AsyncImage(url: URL(string: hero.imageURL)) { phase in
+                switch phase {
+                case .empty:
+                    ProgressView()
+                case .success(let image):
+                    image
+                        .resizable()
+                        .frame(width: 164, height: 164)
+                case .failure:
+                    Image(systemName: "xmark.circle")
+                @unknown default:
+                    EmptyView()
+                }
+            }
         }
         .padding(16)
-        .background(Color("\(hero.name)Color"))
+        .background(hero.color.outputColor)
         .cornerRadius(24)
     }
     

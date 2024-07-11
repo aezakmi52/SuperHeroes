@@ -21,6 +21,8 @@ class DataService: ObservableObject {
     
     // MARK: - Usefull
     
+    // MARK: - changeFavorite
+    
     func changeFavorite(id: Int, isFavorite: Bool) -> Void {
         heroes = heroes.map { hero in
             if hero.id == id {
@@ -28,7 +30,10 @@ class DataService: ObservableObject {
                                  name: hero.name,
                                  stats: hero.stats,
                                  isFavorite: isFavorite,
-                                 category: hero.category)
+                                 imageURL: hero.imageURL,
+                                 category: hero.category,
+                                 color: hero.color
+                                 )
             } else {
                 return hero
             }
